@@ -3,6 +3,9 @@ SCREENWIDTH = 900
 SCREENHEIGHT = 600
 screen = display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 
+font.init()
+calibriBold35 = font.SysFont("Calibri Bold", 35)
+
 WHITE = (255,255,255)
 BGCOLOR = (0,220,160)
 BLUE = (50,100,230)
@@ -12,6 +15,8 @@ p1Y = 250
 p2Y = 250
 paddleWidth = 30
 paddleHeight = 100
+p1Points = 0
+p2Points = 0
 
 ballX = 450
 ballY = 300
@@ -54,6 +59,12 @@ while running:
     elif (ballY >= SCREENHEIGHT):
             ballDy = abs(ballDy) * -1
     elif (ballX >= SCREENWIDTH or ballX <= 0):
+            if ballX >= SCREENWIDTH:
+                    p1Points += 1
+            elif ballX <= 0:
+                    p2Points += 1
+
+
             ballX = 450
             ballY = 300
             p1y = 250
@@ -65,9 +76,14 @@ while running:
     draw.rect(screen, BLUE, p1Paddle)
     draw.rect(screen, RED, p2Paddle)
     draw.rect(screen, WHITE, ball)
+    p1ptsTxt = calibriBold35.render("P1 Points: " + str(p1Points), True, BLUE)
+    p2ptsTxt = calibriBold35.render("P2 Points: " + str(p2Points), True, RED)
+    screen.blit(p1ptsTxt, (130, 20))
+    screen.blit(p2ptsTxt, (620, 20))
 
     display.flip()
     myClock.tick(60)
 
 quit()
 
+ 
