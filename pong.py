@@ -28,7 +28,7 @@ while running:
 
     p1Paddle = Rect(50, p1Y, paddleWidth, paddleHeight)
     p2Paddle = Rect(850, p2Y, paddleWidth, paddleHeight)
-    ball = rect(ballX, ballY, 10 ,10 )
+    ball = Rect(ballX, ballY, 10 ,10 )
 
     keys = key.get_pressed()
     if (keys [K_w] and p1Y > 0):
@@ -45,11 +45,26 @@ while running:
 
     ballX += ballDx
     ballY += ballDy
-    if (ball.col)
+    if (ball.colliderect(p1Paddle)):
+            ballDx = abs(ballDx)
+    elif (ball.colliderect(p2Paddle)):
+            ballDx = abs(ballDx) * -1
+    elif (ballY <= 0):
+            ballDy = abs(ballDy)
+    elif (ballY >= SCREENHEIGHT):
+            ballDy = abs(ballDy) * -1
+    elif (ballX >= SCREENWIDTH or ballX <= 0):
+            ballX = 450
+            ballY = 300
+            p1y = 250
+            p2y =250
+
+
 
     screen.fill(BGCOLOR)
     draw.rect(screen, BLUE, p1Paddle)
     draw.rect(screen, RED, p2Paddle)
+    draw.rect(screen, WHITE, ball)
 
     display.flip()
     myClock.tick(60)
